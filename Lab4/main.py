@@ -66,18 +66,16 @@ for y in range(len(borders)):
                 borders[y][x] = 255
             else:
                 borders[y][x] = 0
-        else:
-            borders[y][x] = 0
-        #elif dir == 2 or dir == 6:
-        #    if current_grad > grad_length(blured, i+1, j) and current_grad > grad_length(blured, i-1, j):
-        #        borders[i][j] = 255
-        #    else:
-        #        borders[i][j] = 0
-        #elif dir == 3 or dir == 7:
-        #    if current_grad > grad_length(blured, i-1, j-1) and current_grad > grad_length(blured, i+1, j+1):
-        #        borders[i][j] = 255
-        #    else:
-        #        borders[i][j] = 0
+        elif dir == 2 or dir == 6:
+            if current_grad > grad_length(blured, x+1, y) and current_grad > grad_length(blured, x-1, y):
+                borders[y][x] = 255
+            else:
+                borders[y][x] = 0
+        elif dir == 3 or dir == 7:
+            if current_grad > grad_length(blured, x-1, y-1) and current_grad > grad_length(blured, x+1, y+1):
+                borders[y][x] = 255
+            else:
+                borders[y][x] = 0
 
 cv.imshow("WINDAW", borders)
 cv.waitKey(0)
