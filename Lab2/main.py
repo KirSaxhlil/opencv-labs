@@ -73,10 +73,10 @@ while True:
         XX = int(U20/moments['m11'])
 
         #print(XX)
-        #cv.rectangle(frame, (X, Y), (X+100, Y+100), (0,0,0), 5)
-        cv.circle(frame, (X, Y), 100, (0,0,0), 5)
-        cv.line(frame, (X, Y+150), (X, Y-150), (0,0,0), 5)
-        cv.line(frame, (X + 150, Y), (X - 150, Y), (0, 0, 0), 5)
+        #cv.rectangle(frame, (X-100, Y-100), (X+100, Y+100), (0,0,0), 3)
+        cv.circle(frame, (X, Y), 100, (0,0,0), 3)
+        cv.line(frame, (X, Y+150), (X, Y-150), (0,0,0), 3)
+        cv.line(frame, (X + 150, Y), (X - 150, Y), (0, 0, 0), 3)
         #print(moments['m01'])
 
     res = cv.bitwise_and(frame, frame, mask=mask)
