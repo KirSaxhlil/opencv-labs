@@ -1,2 +1,93 @@
 ﻿  Lab4_CPP.cpp
+C:\Files\University\7 sem\мультипетухон\Lab4_CPP\Lab4_CPP\Lab4_CPP.cpp(36,44): warning C4838: Преобразование из "_Tp" в "float" требует сужающего преобразования.
+          with
+          [
+              _Tp=uchar
+          ]
+C:\Files\University\7 sem\мультипетухон\Lab4_CPP\Lab4_CPP\Lab4_CPP.cpp(36,72): warning C4838: Преобразование из "_Tp" в "float" требует сужающего преобразования.
+          with
+          [
+              _Tp=uchar
+          ]
+C:\Files\University\7 sem\мультипетухон\Lab4_CPP\Lab4_CPP\Lab4_CPP.cpp(36,97): warning C4838: Преобразование из "_Tp" в "float" требует сужающего преобразования.
+          with
+          [
+              _Tp=uchar
+          ]
+C:\Files\University\7 sem\мультипетухон\Lab4_CPP\Lab4_CPP\Lab4_CPP.cpp(37,44): warning C4838: Преобразование из "_Tp" в "float" требует сужающего преобразования.
+          with
+          [
+              _Tp=uchar
+          ]
+C:\Files\University\7 sem\мультипетухон\Lab4_CPP\Lab4_CPP\Lab4_CPP.cpp(37,69): warning C4838: Преобразование из "_Tp" в "float" требует сужающего преобразования.
+          with
+          [
+              _Tp=uchar
+          ]
+C:\Files\University\7 sem\мультипетухон\Lab4_CPP\Lab4_CPP\Lab4_CPP.cpp(37,90): warning C4838: Преобразование из "_Tp" в "float" требует сужающего преобразования.
+          with
+          [
+              _Tp=uchar
+          ]
+C:\Files\University\7 sem\мультипетухон\Lab4_CPP\Lab4_CPP\Lab4_CPP.cpp(38,44): warning C4838: Преобразование из "_Tp" в "float" требует сужающего преобразования.
+          with
+          [
+              _Tp=uchar
+          ]
+C:\Files\University\7 sem\мультипетухон\Lab4_CPP\Lab4_CPP\Lab4_CPP.cpp(38,73): warning C4838: Преобразование из "_Tp" в "float" требует сужающего преобразования.
+          with
+          [
+              _Tp=uchar
+          ]
+C:\Files\University\7 sem\мультипетухон\Lab4_CPP\Lab4_CPP\Lab4_CPP.cpp(38,98): warning C4838: Преобразование из "_Tp" в "float" требует сужающего преобразования.
+          with
+          [
+              _Tp=uchar
+          ]
+C:\Files\University\7 sem\мультипетухон\Lab4_CPP\Lab4_CPP\Lab4_CPP.cpp(97,55): warning C4838: Преобразование из "_Tp" в "float" требует сужающего преобразования.
+          with
+          [
+              _Tp=uchar
+          ]
+C:\Files\University\7 sem\мультипетухон\Lab4_CPP\Lab4_CPP\Lab4_CPP.cpp(97,86): warning C4838: Преобразование из "_Tp" в "float" требует сужающего преобразования.
+          with
+          [
+              _Tp=uchar
+          ]
+C:\Files\University\7 sem\мультипетухон\Lab4_CPP\Lab4_CPP\Lab4_CPP.cpp(97,114): warning C4838: Преобразование из "_Tp" в "float" требует сужающего преобразования.
+          with
+          [
+              _Tp=uchar
+          ]
+C:\Files\University\7 sem\мультипетухон\Lab4_CPP\Lab4_CPP\Lab4_CPP.cpp(98,47): warning C4838: Преобразование из "_Tp" в "float" требует сужающего преобразования.
+          with
+          [
+              _Tp=uchar
+          ]
+C:\Files\University\7 sem\мультипетухон\Lab4_CPP\Lab4_CPP\Lab4_CPP.cpp(98,75): warning C4838: Преобразование из "_Tp" в "float" требует сужающего преобразования.
+          with
+          [
+              _Tp=uchar
+          ]
+C:\Files\University\7 sem\мультипетухон\Lab4_CPP\Lab4_CPP\Lab4_CPP.cpp(98,99): warning C4838: Преобразование из "_Tp" в "float" требует сужающего преобразования.
+          with
+          [
+              _Tp=uchar
+          ]
+C:\Files\University\7 sem\мультипетухон\Lab4_CPP\Lab4_CPP\Lab4_CPP.cpp(99,47): warning C4838: Преобразование из "_Tp" в "float" требует сужающего преобразования.
+          with
+          [
+              _Tp=uchar
+          ]
+C:\Files\University\7 sem\мультипетухон\Lab4_CPP\Lab4_CPP\Lab4_CPP.cpp(99,79): warning C4838: Преобразование из "_Tp" в "float" требует сужающего преобразования.
+          with
+          [
+              _Tp=uchar
+          ]
+C:\Files\University\7 sem\мультипетухон\Lab4_CPP\Lab4_CPP\Lab4_CPP.cpp(99,107): warning C4838: Преобразование из "_Tp" в "float" требует сужающего преобразования.
+          with
+          [
+              _Tp=uchar
+          ]
+C:\Files\University\7 sem\мультипетухон\Lab4_CPP\Lab4_CPP\Lab4_CPP.cpp(29): warning C4715: get_dir: значение возвращается не при всех путях выполнения
   Lab4_CPP.vcxproj -> C:\Files\University\7 sem\мультипетухон\Lab4_CPP\x64\Debug\Lab4_CPP.exe
