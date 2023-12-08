@@ -94,8 +94,8 @@ for y in range(len(borders)):
         else:
             borders[y][x] = 0
 
-low_level = max_grad//25
-high_level = max_grad//10
+low_level = max_grad//10
+high_level = max_grad//5
 
 for y in range(len(borders)):
     for x in range(len(borders[y])):
@@ -120,6 +120,11 @@ for y in range(len(borders)):
                 else:
                     borders[y][x] = 0
 
+#print("Градиенты:")
+#print(grads)
+#print("Углы:")
+#print(dirs)
+cv.imshow("WIN", gray)
 cv.imshow("WINDAW", borders)
 cv.waitKey(0)
 cv.destroyAllWindows()

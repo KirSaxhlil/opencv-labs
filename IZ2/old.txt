@@ -1,0 +1,250 @@
+def half_grad(img_part, operator):
+    sum = 0
+    for y in range(len(img_part)):
+        for x in range(len(img_part[y])):
+            sum += img_part[y][x] * operator[y][x]
+    return sum
+
+
+def get_dir(x, y, tg):
+    if (x > 0 and y < 0 and tg < -2.414) or (x < 0 and y < 0 and tg > 2.414) or (x == 0 and y < 0):
+        return 0
+    elif x > 0 and y < 0 and tg < -0.414:
+        return 1
+    elif (x > 0 and y < 0 and tg > -0.414) or (x > 0 and y > 0 and tg < 0.414) or (x > 0 and y == 0):
+        return 2
+    elif x > 0 and y > 0 and tg < 2.414:
+        return 3
+    elif (x > 0 and y > 0 and tg > 2.414) or (x < 0 and y > 0 and tg < -2.414) or (x == 0 and y > 0):
+        return 4
+    elif x < 0 and y > 0 and tg < -0.414:
+        return 5
+    elif (x < 0 and y > 0 and tg > -0.414) or (x < 0 and y < 0 and tg < 0.414) or (x < 0 and y == 0):
+        return 6
+    elif x < 0 and y < 0 and tg < 2.414:
+        return 7
+
+
+def grad_length(img, x, y):
+    img_part = img[y - 1:y + 2, x - 1:x + 2]
+    # print(img_part)
+    return math.sqrt(half_grad(img_part, sobelX) ** 2 + half_grad(img_part, sobelY) ** 2)
+
+
+frame = cv.imread(file_name)
+gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
+blured = cv.blur(gray, (kernel_size, kernel_size), sigma)
+borders = blured.copy()
+
+grads = [[0 for i in range(len(borders[0]))] for j in range(len(borders))]
+dirs = [[0 for i in range(len(borders[0]))] for j in range(len(borders))]  # [[0]*len(borders[0])]*len(borders)
+max_grad = 0
+
+# test = [[0 for i in range(3)] for j in range(3)]
+# test[1][1] = 1
+# print(test)
+
+for y in range(len(grads)):
+    for x in range(len(grads[0])):
+        if x == 0 or x == len(borders[0]) - 1 or y == 0 or y == len(borders) - 1:
+            grads[y][x] = 0
+            dirs[y][x] = -1
+            continue
+        img_part = blured[y - 1:y + 2, x - 1:x + 2]
+        Gx = half_grad(img_part, sobelX)
+        Gy = half_grad(img_part, sobelY)
+        if Gx == 0 and Gy == 0:
+            grads[y][x] = 0
+            dirs[y][x] = -1
+            continue
+        tg = Gy / Gx
+        dirs[y][x] = get_dir(Gx, Gy, tg)
+        grads[y][x] = math.sqrt(Gx ** 2 + Gy ** 2)
+        if grads[y][x] > max_grad:
+            max_grad = grads[y][x]
+
+for y in range(len(borders)):
+    for x in range(len(borders[y])):
+        if x == 0 or x == len(borders[y]) - 1 or y == 0 or y == len(borders) - 1:
+            borders[y][x] = 0
+            continue
+
+        if dirs[y][x] == 0 or dirs[y][x] == 4:
+            if grads[y][x] > grads[y - 1][x] and grads[y][x] > grads[y + 1][x]:
+                borders[y][x] = 255
+            else:
+                borders[y][x] = 0
+        elif dirs[y][x] == 1 or dirs[y][x] == 5:
+            if grads[y][x] > grads[y - 1][x + 1] and grads[y][x] > grads[y + 1][x - 1]:
+                borders[y][x] = 255
+            else:
+                borders[y][x] = 0
+        elif dirs[y][x] == 2 or dirs[y][x] == 6:
+            if grads[y][x] > grads[y][x + 1] and grads[y][x] > grads[y][x - 1]:
+                borders[y][x] = 255
+            else:
+                borders[y][x] = 0
+        elif dirs[y][x] == 3 or dirs[y][x] == 7:
+            if grads[y][x] > grads[y - 1][x - 1] and grads[y][x] > grads[y + 1][x + 1]:
+                borders[y][x] = 255
+            else:
+                borders[y][x] = 0
+        else:
+            borders[y][x] = 0
+
+low_level = max_grad // 10
+high_level = max_grad // 5
+
+for y in range(len(borders)):
+    for x in range(len(borders[y])):
+        if x == 0 or x == len(borders[y]) - 1 or y == 0 or y == len(borders) - 1:
+            continue
+        if borders[y][x] == 255:
+            if grads[y][x] < low_level:
+                borders[y][x] = 0
+            elif grads[y][x] > high_level:
+                continue
+            else:
+                has_nbr = False
+                for xx in range(-1, 2):
+                    if has_nbr == True:
+                        break
+                    for yy in range(-1, 2):
+                        if (borders[y + yy][x + xx] == 255):
+                            has_nbr = True
+                            break
+                if has_nbr == True:
+                    continue
+                else:
+                    borders[y][x] = 0
+
+
+
+
+void sigmafilter(Mat &img,int sigma,int kernel_size)
+{
+ 
+ int rows=img.rows;
+ int cols=img.cols;
+ 
+ int midPixel=0, anyPixel=0 , sum=0 , no=0 , x=0 , x2=0 , x3=0 , y=0 , y2=0 , y3=0;
+ for (int y=0; y<rows ;y++)  
+    for (int x=0; x<cols;x++)   
+        {
+         midPixel = img.at<uchar>(y,x);   
+         sum = 0; no = 0;
+         for (int y2=-1*floor(kernel_size/2); y2 <= floor(kernel_size/2);y2++)
+              {
+               y3 = y + y2;
+               if  (y3 >= 0 && y3 < rows) 
+                 for (int x2=-floor(kernel_size/2); x2 <= floor(kernel_size/2);x2++)
+                     {
+                       x3 = x2 + x;
+                       if ( x3 >= 0 && x3<cols )
+                           {
+                            anyPixel = img.at<uchar>(y3,x3);
+                            if ( abs(midPixel-anyPixel) < sigma)
+                                {sum += anyPixel; no++;}
+                             
+                           }
+                     
+                     }
+               }
+          if ( no > 0 ) 
+             img.at<uchar>(y,x) = sum/no;
+          else   img.at<uchar>(y,x) = midPixel; 
+         
+       }
+ 
+
+       
+  
+}
+
+
+
+def SigmaFilter(img, sigma, kernel_size):
+    rows = len(img)
+    cols = len(img[0])
+    midPixel = 0
+    anyPixel = 0
+    sum = 0
+    no = 0
+    x = 0
+    x2 = 0
+    x3 = 0
+    y = 0
+    y2 = 0
+    y3 = 0
+    for y in range(rows):
+        for x in range(cols):
+            midPixel = img[y][x]
+            sum = 0
+            no = 0
+            y2 = -1*int(kernel_size/2)
+            while y2 <= int(kernel_size/2):
+                y3 = y+y2
+                if y3 >= 0 and y3 < rows:
+                    x2 = -int(kernel_size/2)
+                    while x2 <= int(kernel_size/2):
+                        x3 = x2+x
+                        if x3 >= 0 and x3 < cols:
+                            anypixel = img[y3][x3]
+                            if abs()
+
+
+for y in range(len(frame)):
+    x = 0
+    SAD = [0, 0, 0, 0, 0]
+    DIF = [0, 0, 0, 0, 0]
+    while x < len(frame[0]) - 1:
+        SAD[0] = 0
+        for c in range(3):
+            SAD[0] += abs(frame[y][x][c] - frame[y][x + 1][c])
+        DIF[0] = SAD[0] * SignDIF(frame[y][x], frame[y][x + 1])
+        Code = 0
+        for k in range(5):
+            if SAD[k] > threshold:
+                Code += 2 ** (k)
+        #print(LUT[Code])
+        if ToEdge(LUT[Code], DIF, SAD):
+            borders[y * 2][(x * 2) + 1] = 255
+            borders[(y * 2)-1][(x * 2) + 1] += 125
+            borders[(y * 2)+1][(x * 2) + 1] += 125
+            #borders[(y * 2)+1][(x*2)+1] = borders[(y * 2)+1][(x*2)+1+4] + 255
+            #borders[(y * 2) - 1][(x * 2) + 1] = borders[(y * 2) - 1][(x * 2) + 1 + 4] + 255
+            #print("yey")
+        for i in range(4):
+            SAD[4-i] = SAD[4-i-1]
+            DIF[4-1] = DIF[4-i-1]
+        x += 1
+# 0 1 2 3 4 5 6 7 8 9
+# -2 +4 =2
+# 0 +4 = 4
+
+for x in range(len(frame[0])):
+    y = 0
+    SAD = [0, 0, 0, 0, 0]
+    DIF = [0, 0, 0, 0, 0]
+    while y < len(frame) - 1:
+        SAD[0] = 0
+        for c in range(3):
+            SAD[0] += abs(frame[y][x][c] - frame[y+1][x][c])
+        DIF[0] = SAD[0] * SignDIF(frame[y][x], frame[y+1][x])
+        Code = 0
+        for k in range(5):
+            if SAD[k] > threshold:
+                Code += 2 ** (k)
+        #print(LUT[Code])
+        if ToEdge(LUT[Code], DIF, SAD):
+            borders[(y * 2)+1][(x * 2)] = 255
+            borders[(y * 2)+1][(x * 2)-1] += 125
+            borders[(y * 2)+1][(x * 2)+1] += 125
+            #borders[(y * 2) + 1][(x * 2) + 1] = borders[(y * 2) + 1+4][(x * 2) + 1] + 255
+            #borders[(y * 2) + 1][(x * 2) - 1] = borders[(y * 2) + 1 +4][(x * 2) - 1] + 255
+            #borders[()]
+            # print("yey")
+        for i in range(4):
+            SAD[4 - i] = SAD[4 - i - 1]
+            DIF[4 - 1] = DIF[4 - i - 1]
+        y += 1

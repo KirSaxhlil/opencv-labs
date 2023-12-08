@@ -159,7 +159,7 @@ int main(int argc, char** argv)
         }
     }
 
-    float low_level = max_grad / 25;
+    float low_level = max_grad / 15;
     float high_level = max_grad / 10;
 
     for (int y = 0; y < borders.rows; y++) {
