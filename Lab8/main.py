@@ -1,11 +1,26 @@
 import cv2
+import time
 
 face_cascade = cv2.CascadeClassifier('cascad_trained/haarcascade_frontalface_default.xml')
 cap = cv2.VideoCapture(0)
 
-while False:
+source = "video/input_2.mp4"
+path_to_output = "video/output_haar.mov"
+
+video = cv2.VideoCapture(source, cv2.CAP_ANY)
+w = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))
+h = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
+fourcc = cv2.VideoWriter_fourcc(*'XVID')
+video_writer = cv2.VideoWriter(path_to_output, fourcc, 30, (w, h))
+
+print("Haar started")
+start = time.perf_counter()
+while True:
     # Чтение кадра из видеопотока
-    ret, frame = cap.read()
+    #ret, frame = cap.read()
+    ret, frame = video.read()
+    if not ret:
+        break
 
     # Преобразование кадра в оттенки серого
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
@@ -20,17 +35,20 @@ while False:
         cv2.putText(frame, 'Number of faces: ' + str(len(faces)), (30,30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,0),2)
 
     # Отображение результата
-    cv2.imshow('Face Detection', frame)
+    #cv2.imshow('Face Detection', frame)
 
+    video_writer.write(frame)
     # Прерывание цикла при нажатии клавиши 'q'
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
+    #if cv2.waitKey(1) & 0xFF == ord('q'):
+    #    break
+video_writer.release()
+time_took = time.perf_counter() - start
+print(f"Потребовалось: {time_took:.2f}s")
 
 
 cv2.destroyAllWindows()
 
 import numpy as np
-import time
 import sys
 import os
 
@@ -55,9 +73,23 @@ colors = np.random.randint(0, 255, size=(len(labels), 3), dtype="uint8")
 net = cv2.dnn.readNetFromDarknet(config_path, weights_path)
 
 path_name = "images/street.jpg"
+
+#source = "video/input_2.mp4"
+path_to_output = "video/output_YOLA.mov"
+
+video = cv2.VideoCapture(source, cv2.CAP_ANY)
+w = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))
+h = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
+fourcc = cv2.VideoWriter_fourcc(*'XVID')
+video_writer = cv2.VideoWriter(path_to_output, fourcc, 30, (w, h))
+
+print("YOLA started")
+start = time.perf_counter()
 while True:
     #image = cv2.imread(path_name)
-    ret, image = cap.read()
+    ret, image = video.read()
+    if not ret:
+        break
     file_name = os.path.basename(path_name)
     filename, ext = file_name.split(".")
 
@@ -150,10 +182,16 @@ while True:
 
 #cv2.imwrite(filename + "_yolo3." + ext, image)
 #while True:
-    cv2.imshow("WIN", image)
+    #cv2.imshow("WIN", image)
+    #print(i)
+    #i+=1
+    video_writer.write(image)
 
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
+    #if cv2.waitKey(1) & 0xFF == ord('q'):
+    #   break
+video_writer.release()
+time_took = time.perf_counter() - start
+print(f"Потребовалось: {time_took:.2f}s")
 
 cap.release()
 cv2.destroyAllWindows()
